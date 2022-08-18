@@ -24,20 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `c_mtb_shopstore_group`
---
-
-CREATE TABLE `c_mtb_shopstore_group` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `product_id` int(10) UNSIGNED DEFAULT NULL,
-  `name` varchar(255) NOT NULL,
-  `sort_no` smallint(5) UNSIGNED NOT NULL,
-  `discriminator_type` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- テーブルの構造 `doctrine_migration_versions`
 --
 
