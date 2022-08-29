@@ -17,6 +17,12 @@ if (!class_exists('\Customize\Entity\StoreEntry')) {
     class StoreEntry extends \Eccube\Entity\AbstractEntity
     {
         
+        public function address()
+        {
+            return null;
+        }
+
+
         /**
          * @var int
          *
@@ -111,7 +117,27 @@ if (!class_exists('\Customize\Entity\StoreEntry')) {
             $this->name = $name;
             return $this;
         }
-        
+        /**
+         * Get note
+         *
+         * @return note
+         */
+        public function getNote()
+        {
+            return $this->note;
+        }
+
+        /**
+         * Set shopnote
+         *
+         * @return this
+         */
+        public function setNote($note)
+        {
+            $this->note = $note;
+            return $this;
+        }
+
         /**
          * Set postal_code.
          *

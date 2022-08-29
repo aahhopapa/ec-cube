@@ -32,23 +32,51 @@
                     </dl>
                     <dl>
                         <dt>
-                            {{ form_label(form.address, '住所', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            {{ form_label(form.address_ec, '住所', { 'label_attr': { 'class': 'ec-label' }}) }}
                         </dt>
                         <dd>
-                            <div class="ec-select{{ has_errors(form.address.pref) ? ' error' }}">
-                                {{ form_widget(form.address.pref) }}
-                                {{ form_errors(form.address.pref) }}
+                            <div class="ec-select{{ has_errors(form.address_ec.pref) ? ' error' }}">
+                                {{ form_widget(form.address_ec.pref) }}
+                                {{ form_errors(form.address_ec.pref) }}
                             </div>
-                            <div class="ec-input{{ has_errors(form.address.addr01) ? ' error' }}">
-                                {{ form_widget(form.address.addr01, { 'attr': { 'placeholder': '市区町村名(例：大阪市北区)' }}) }}
-                                {{ form_errors(form.address.addr01) }}
+                            <div class="ec-input{{ has_errors(form.address_ec.addr01) ? ' error' }}">
+                                {{ form_widget(form.address_ec.addr01, { 'attr': { 'placeholder': '市区町村名(例：大阪市北区)' }}) }}
+                                {{ form_errors(form.address_ec.addr01) }}
                             </div>
-                            <div class="ec-input{{ has_errors(form.address.addr02) ? ' error' }}">
-                                {{ form_widget(form.address.addr02,  { 'attr': { 'placeholder': '番地・ビル名(例：西梅田1丁目6-8)' }}) }}
-                                {{ form_errors(form.address.addr02) }}
+                            <div class="ec-input{{ has_errors(form.address_ec.addr02) ? ' error' }}">
+                                {{ form_widget(form.address_ec.addr02,  { 'attr': { 'placeholder': '番地・ビル名(例：西梅田1丁目6-8)' }}) }}
+                                {{ form_errors(form.address_ec.addr02) }}
                             </div>
                         </dd>
                     </dl>
+                    <dl>
+                        <dt>
+                            {# {{ form_label(form.note, 'ノート', { 'label_attr': { 'class': 'ec-label' }}) }} #}
+                            {{ form_label(form.note) }}
+                        </dt>
+                        <dd>
+                            <div class="ec-halfInput{{ has_errors(form.note) ? ' error' }}">
+                                <dt>
+                                    {{ form_widget(form.note) }}
+                                    {{ form_help(form.note) }}
+                                </dt>
+                                <dt>
+                                    {{ form_errors(form.note) }}
+                                </dt>
+                            </div>
+                        </dd>
+                    </dl>
+
+                    {% block postal_address_ec_row %}
+                        {% for child in form.children|filter(child => not child.rendered) %}
+                            <div class="form-group">
+                                {{ form_label(child) }}
+                                {{ form_widget(child) }}
+                                {{ form_help(child) }}
+                                {{ form_errors(child) }}
+                            </div>
+                        {% endfor %}
+                    {% endblock %}
                 </div>
             </form>
         </div>
