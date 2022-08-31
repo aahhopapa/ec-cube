@@ -1,0 +1,57 @@
+{# index.twig #}
+{% extends 'default_frame.twig' %}
+
+{# {% set body_class = 'registration_page' %} #}
+
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+
+{% block javascript %}
+    <script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+{% endblock javascript %} 
+
+{% block main %}
+    <div class="ec-registerRole">
+        <div class="ec-pageHeader">
+            <h1>{{ '画面'|trans }}</h1>
+        </div>
+        <div class="ec-off1Grid">
+            <form method="post" action="{{ url('anything') }}" novalidate class="h-adr">
+            {# {{ form_widget(form._token) }} #}
+                <div class="ec-borderedDefs">
+                    <dl>
+                        <dt>
+                            {{ form_label(form.any_input, 'inputラベル', { 'label_attr': { 'class': 'ec-label' }}) }}
+                        </dt>
+                        <dd>
+                            <div class="ec-halfInput{{ has_errors(form.any_input) ? ' error' }}">
+                                {{ form_widget(form.any_input) }}
+                                {{ form_errors(form.any_input) }}
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>
+                            {# {{ form_label(form.any_select, 'selectラベル', { 'label_attr': { 'class': 'ec-label' }}) }} #}
+                            {{ form_label(form.any_select, 'selectラベル') }}
+                        </dt>
+                        <dd>
+                            <div class="ec-select{{ has_errors(form.any_select) ? ' error' }}">
+                                {{ form_widget(form.any_select) }}
+                                {{ form_errors(form.any_select) }}
+                            </div>
+                        </dd>
+                    </dl>
+            <div class="ec-registerRole__actions">
+                <div class="ec-off4Grid">
+                    <div class="ec-off4Grid__cell">
+                        <button class="ec-blockBtn--action" type="submit" name="mode" value="confirm">{{ '同意する'|trans }}</button>
+                        <a class="ec-blockBtn--cancel" href="{{ url('homepage') }}">{{ '同意しない'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
