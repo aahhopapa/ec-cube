@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2022-08-16 02:43:45
+-- 生成日時: 2022-08-31 10:45:21
 -- サーバのバージョン： 10.4.24-MariaDB
 -- PHP のバージョン: 7.4.29
 
@@ -18,8 +18,39 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- データベース: `eccube`
+-- データベース: `ec-cube`
 --
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `c_dtb_anything`
+--
+
+CREATE TABLE `c_dtb_anything` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `any_input` varchar(255) NOT NULL,
+  `any_select` varchar(255) NOT NULL,
+  `discriminator_type` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `c_dtb_store_entry`
+--
+
+CREATE TABLE `c_dtb_store_entry` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `pref_id` smallint(5) UNSIGNED DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `postal_code` varchar(8) DEFAULT NULL,
+  `addr01` varchar(255) DEFAULT NULL,
+  `addr02` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(14) DEFAULT NULL,
+  `note` varchar(4000) DEFAULT NULL,
+  `discriminator_type` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -88,16 +119,15 @@ CREATE TABLE `dtb_base_info` (
   `option_point` tinyint(1) NOT NULL DEFAULT 1,
   `basic_point_rate` decimal(10,0) UNSIGNED DEFAULT 1,
   `point_conversion_rate` decimal(10,0) UNSIGNED DEFAULT 1,
-  `discriminator_type` varchar(255) NOT NULL,
-  `company_name_vn` varchar(255) DEFAULT NULL
+  `discriminator_type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- テーブルのデータのダンプ `dtb_base_info`
 --
 
-INSERT INTO `dtb_base_info` (`id`, `country_id`, `pref_id`, `company_name`, `company_kana`, `postal_code`, `addr01`, `addr02`, `phone_number`, `business_hour`, `email01`, `email02`, `email03`, `email04`, `shop_name`, `shop_kana`, `shop_name_eng`, `update_date`, `good_traded`, `message`, `delivery_free_amount`, `delivery_free_quantity`, `option_mypage_order_status_display`, `option_nostock_hidden`, `option_favorite_product`, `option_product_delivery_fee`, `option_product_tax_rule`, `option_customer_activate`, `option_remember_me`, `authentication_key`, `php_path`, `option_point`, `basic_point_rate`, `point_conversion_rate`, `discriminator_type`, `company_name_vn`) VALUES
-(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'aahhopapa@gmail.com', 'aahhopapa@gmail.com', 'aahhopapa@gmail.com', 'aahhopapa@gmail.com', 'eccube', NULL, NULL, '2022-07-27 00:17:11', NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 1, 1, NULL, NULL, 1, '1', '1', 'baseinfo', NULL);
+INSERT INTO `dtb_base_info` (`id`, `country_id`, `pref_id`, `company_name`, `company_kana`, `postal_code`, `addr01`, `addr02`, `phone_number`, `business_hour`, `email01`, `email02`, `email03`, `email04`, `shop_name`, `shop_kana`, `shop_name_eng`, `update_date`, `good_traded`, `message`, `delivery_free_amount`, `delivery_free_quantity`, `option_mypage_order_status_display`, `option_nostock_hidden`, `option_favorite_product`, `option_product_delivery_fee`, `option_product_tax_rule`, `option_customer_activate`, `option_remember_me`, `authentication_key`, `php_path`, `option_point`, `basic_point_rate`, `point_conversion_rate`, `discriminator_type`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'aahhopapa@gmail.com', 'aahhopapa@gmail.com', 'aahhopapa@gmail.com', 'aahhopapa@gmail.com', 'eccube', NULL, NULL, '2022-07-27 00:17:11', NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 1, 1, NULL, NULL, 1, '1', '1', 'baseinfo');
 
 -- --------------------------------------------------------
 
@@ -202,7 +232,8 @@ CREATE TABLE `dtb_cart` (
 --
 
 INSERT INTO `dtb_cart` (`id`, `customer_id`, `cart_key`, `pre_order_id`, `total_price`, `delivery_fee_total`, `sort_no`, `create_date`, `update_date`, `add_point`, `use_point`, `discriminator_type`) VALUES
-(12, 1, '1_2', '02dc6a95f0101df02b4ee3ddf70adfeb240873a8', '6160.00', '0.00', NULL, '2022-08-03 00:02:54', '2022-08-03 01:20:48', '0', '0', 'cart');
+(12, 1, '1_2', '02dc6a95f0101df02b4ee3ddf70adfeb240873a8', '6160.00', '0.00', NULL, '2022-08-03 00:02:54', '2022-08-03 01:20:48', '0', '0', 'cart'),
+(15, NULL, 'pSeE5jrLEK9rxVie4nsrN5OvflOzBhjW_1', NULL, '34100.00', '0.00', NULL, '2022-08-18 05:58:15', '2022-08-18 05:58:15', '0', '0', 'cart');
 
 -- --------------------------------------------------------
 
@@ -225,7 +256,9 @@ CREATE TABLE `dtb_cart_item` (
 --
 
 INSERT INTO `dtb_cart_item` (`id`, `product_class_id`, `cart_id`, `price`, `quantity`, `point_rate`, `discriminator_type`) VALUES
-(13, 11, 12, '3080.00', '2', NULL, 'cartitem');
+(13, 11, 12, '3080.00', '2', NULL, 'cartitem'),
+(17, 10, 15, '5500.00', '1', NULL, 'cartitem'),
+(18, 9, 15, '14300.00', '2', NULL, 'cartitem');
 
 -- --------------------------------------------------------
 
@@ -589,7 +622,8 @@ CREATE TABLE `dtb_customer` (
 --
 
 INSERT INTO `dtb_customer` (`id`, `customer_status_id`, `sex_id`, `job_id`, `country_id`, `pref_id`, `name01`, `name02`, `kana01`, `kana02`, `company_name`, `postal_code`, `addr01`, `addr02`, `email`, `phone_number`, `birth`, `password`, `salt`, `secret_key`, `first_buy_date`, `last_buy_date`, `buy_times`, `buy_total`, `note`, `reset_key`, `reset_expire`, `point`, `create_date`, `update_date`, `discriminator_type`, `plg_mailmagazine_flg`) VALUES
-(1, 2, NULL, NULL, NULL, 23, 'テティス', 'てて', 'テティス', 'テテテ', NULL, '4580801', '名古屋市緑区鳴海町', 'テティス', 'deho.chon@dragonagency.co.jp', '11122223333', NULL, '8f021f23d8903cb649321d4ea72ef625a73b9d1aa8dc328967165fff66ca3b58', '4f88b4065d', '14y0gs09OHkO5sRVQvgPQuIxDjkkSASa', NULL, NULL, '0', '0.00', NULL, NULL, NULL, '0', '2022-07-27 00:27:32', '2022-07-27 00:28:24', 'customer', 0);
+(1, 2, NULL, NULL, NULL, 23, 'テティス', 'てて', 'テティス', 'テテテ', NULL, '4580801', '名古屋市緑区鳴海町', 'テティス', 'deho.chon@dragonagency.co.jp', '11122223333', NULL, '8f021f23d8903cb649321d4ea72ef625a73b9d1aa8dc328967165fff66ca3b58', '4f88b4065d', '14y0gs09OHkO5sRVQvgPQuIxDjkkSASa', NULL, NULL, '0', '0.00', NULL, NULL, NULL, '0', '2022-07-27 00:27:32', '2022-07-27 00:28:24', 'customer', 0),
+(2, 1, NULL, NULL, NULL, 23, 'ああ', 'いい', 'アア', 'イイ', NULL, '4580801', '名古屋市緑区鳴海町', 'ええええええ', 'ec-cube@example.com', '11122223333', NULL, 'b455f8fd309010e930517fbb9579419d088561913a1a83561c118a597f0f7815', 'ccd72be49d', 'ca6jEnR9aAwUVMIBoi4T4vPYPQ4sCutg', NULL, NULL, '0', '0.00', NULL, NULL, NULL, '0', '2022-08-30 05:12:42', '2022-08-30 05:12:42', 'customer', 0);
 
 -- --------------------------------------------------------
 
@@ -671,26 +705,24 @@ CREATE TABLE `dtb_delivery_duration` (
   `name` varchar(255) DEFAULT NULL,
   `duration` smallint(6) NOT NULL DEFAULT 0,
   `sort_no` int(10) UNSIGNED NOT NULL,
-  `discriminator_type` varchar(255) NOT NULL,
-  `from_date` datetime DEFAULT NULL COMMENT '(DC2Type:datetimetz)',
-  `to_date` datetime DEFAULT NULL COMMENT '(DC2Type:datetimetz)'
+  `discriminator_type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- テーブルのデータのダンプ `dtb_delivery_duration`
 --
 
-INSERT INTO `dtb_delivery_duration` (`id`, `name`, `duration`, `sort_no`, `discriminator_type`, `from_date`, `to_date`) VALUES
-(1, '即日', 0, 0, 'deliveryduration', NULL, NULL),
-(2, '1～2日後', 1, 1, 'deliveryduration', NULL, NULL),
-(3, '3～4日後', 3, 2, 'deliveryduration', NULL, NULL),
-(4, '1週間以降', 7, 3, 'deliveryduration', NULL, NULL),
-(5, '2週間以降', 14, 4, 'deliveryduration', NULL, NULL),
-(6, '3週間以降', 21, 5, 'deliveryduration', NULL, NULL),
-(7, '1ヶ月以降', 30, 6, 'deliveryduration', NULL, NULL),
-(8, '2ヶ月以降', 60, 7, 'deliveryduration', NULL, NULL),
-(9, 'お取り寄せ(商品入荷後)', -1, 8, 'deliveryduration', NULL, NULL),
-(10, 'おせち販売期間', -1, 9, 'deliveryduration', '2022-12-28 18:46:19', '2023-01-06 18:46:41');
+INSERT INTO `dtb_delivery_duration` (`id`, `name`, `duration`, `sort_no`, `discriminator_type`) VALUES
+(1, '即日', 0, 0, 'deliveryduration'),
+(2, '1～2日後', 1, 1, 'deliveryduration'),
+(3, '3～4日後', 3, 2, 'deliveryduration'),
+(4, '1週間以降', 7, 3, 'deliveryduration'),
+(5, '2週間以降', 14, 4, 'deliveryduration'),
+(6, '3週間以降', 21, 5, 'deliveryduration'),
+(7, '1ヶ月以降', 30, 6, 'deliveryduration'),
+(8, '2ヶ月以降', 60, 7, 'deliveryduration'),
+(9, 'お取り寄せ(商品入荷後)', -1, 8, 'deliveryduration'),
+(10, 'おせち販売期間', -1, 9, 'deliveryduration');
 
 -- --------------------------------------------------------
 
@@ -885,7 +917,12 @@ INSERT INTO `dtb_login_history` (`id`, `login_history_status_id`, `member_id`, `
 (3, 1, 1, 'admin', '::1', '2022-07-27 06:56:39', '2022-07-27 06:56:39', 'loginhistory'),
 (4, 1, 1, 'admin', '::1', '2022-07-29 02:18:26', '2022-07-29 02:18:26', 'loginhistory'),
 (5, 0, NULL, 'heiwadotecadmin', '::1', '2022-07-29 09:50:23', '2022-07-29 09:50:23', 'loginhistory'),
-(6, 1, 1, 'admin', '::1', '2022-07-29 09:50:30', '2022-07-29 09:50:30', 'loginhistory');
+(6, 1, 1, 'admin', '::1', '2022-07-29 09:50:30', '2022-07-29 09:50:30', 'loginhistory'),
+(7, 1, 1, 'admin', '::1', '2022-08-17 08:04:49', '2022-08-17 08:04:49', 'loginhistory'),
+(8, 0, NULL, 'heiwadotecadmin', '::1', '2022-08-17 08:18:39', '2022-08-17 08:18:39', 'loginhistory'),
+(9, 1, 1, 'admin', '::1', '2022-08-17 08:18:43', '2022-08-17 08:18:43', 'loginhistory'),
+(10, 1, 1, 'admin', '::1', '2022-08-17 08:32:13', '2022-08-17 08:32:13', 'loginhistory'),
+(11, 1, 1, 'admin', '::1', '2022-08-18 00:16:38', '2022-08-18 00:16:38', 'loginhistory');
 
 -- --------------------------------------------------------
 
@@ -965,7 +1002,7 @@ CREATE TABLE `dtb_member` (
 --
 
 INSERT INTO `dtb_member` (`id`, `work_id`, `authority_id`, `creator_id`, `name`, `department`, `login_id`, `password`, `salt`, `sort_no`, `two_factor_auth_key`, `two_factor_auth_enabled`, `create_date`, `update_date`, `login_date`, `discriminator_type`) VALUES
-(1, 1, 0, 1, '管理者', 'eccube', 'admin', '07ab695b996b81773a65a7d3916d8b09773dbbac7157b6926514b7e7d44fcf79', 'RB4pduU31nPm1CgRnZec9ysb8njjElrl', 1, NULL, 0, '2022-07-27 00:17:11', '2022-07-29 09:50:30', '2022-07-29 09:50:30', 'member');
+(1, 1, 0, 1, '管理者', 'eccube', 'admin', '07ab695b996b81773a65a7d3916d8b09773dbbac7157b6926514b7e7d44fcf79', 'RB4pduU31nPm1CgRnZec9ysb8njjElrl', 1, NULL, 0, '2022-07-27 00:17:11', '2022-08-18 00:16:38', '2022-08-18 00:16:38', 'member');
 
 -- --------------------------------------------------------
 
@@ -1211,8 +1248,7 @@ INSERT INTO `dtb_page` (`id`, `master_page_id`, `page_name`, `url`, `file_name`,
 (46, 18, '会員登録(確認ページ)', 'entry_confirm', 'Entry/confirm', 3, NULL, NULL, NULL, '2020-01-12 01:15:03', '2020-01-12 01:15:03', 'noindex', NULL, 'page'),
 (47, 12, 'MYページ/退会手続き(確認ページ)', 'mypage_withdraw_confirm', 'Mypage/withdraw_confirm', 3, NULL, NULL, NULL, '2020-01-12 10:14:52', '2020-01-12 10:14:52', 'noindex', NULL, 'page'),
 (48, 16, 'お問い合わせ(確認ページ)', 'contact_confirm', 'Contact/confirm', 3, NULL, NULL, NULL, '2020-01-12 10:14:52', '2020-01-12 10:14:52', 'noindex', NULL, 'page'),
-(49, NULL, 'テストページ', 'customize', 'Customize/customize', 3, NULL, NULL, NULL, '2020-01-12 10:14:52', '2020-01-12 10:14:52', 'noindex', NULL, 'page'),
-(50, NULL, 'テストページ', 'test', 'test', 0, NULL, NULL, NULL, '2022-07-27 01:43:33', '2022-07-27 01:43:33', NULL, NULL, 'page');
+(49, NULL, '店舗登録ページ', 'store_entry', 'StoreEntry/index', 3, NULL, NULL, NULL, '2022-07-27 01:43:33', '2022-07-27 01:43:33', 'noindex', NULL, 'page');
 
 -- --------------------------------------------------------
 
@@ -1274,8 +1310,7 @@ INSERT INTO `dtb_page_layout` (`page_id`, `layout_id`, `sort_no`, `discriminator
 (45, 2, 41, 'pagelayout'),
 (46, 2, 42, 'pagelayout'),
 (47, 2, 43, 'pagelayout'),
-(48, 2, 44, 'pagelayout'),
-(49, 2, 45, 'pagelayout');
+(48, 2, 44, 'pagelayout');
 
 -- --------------------------------------------------------
 
@@ -1385,17 +1420,16 @@ CREATE TABLE `dtb_product` (
   `free_area` longtext DEFAULT NULL,
   `create_date` datetime NOT NULL COMMENT '(DC2Type:datetimetz)',
   `update_date` datetime NOT NULL COMMENT '(DC2Type:datetimetz)',
-  `discriminator_type` varchar(255) NOT NULL,
-  `maker_name` varchar(255) DEFAULT NULL
+  `discriminator_type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- テーブルのデータのダンプ `dtb_product`
 --
 
-INSERT INTO `dtb_product` (`id`, `creator_id`, `product_status_id`, `name`, `note`, `description_list`, `description_detail`, `search_word`, `free_area`, `create_date`, `update_date`, `discriminator_type`, `maker_name`) VALUES
-(1, NULL, 1, '彩のジェラートCUBE', NULL, NULL, '冬でも食べたい立方体のジェラート。定番のチョコフレーバーは、チョコレート特有の甘い香りが特徴です。適度な甘みと日本人の口に合いやすいサイズ感で長く愛用いただけます。\n最高級バニラフレーバーは、贈り物としても人気です。', NULL, NULL, '2018-09-28 10:14:52', '2018-09-28 10:14:52', 'product', NULL),
-(2, 1, 1, 'チェリーアイスサンド', NULL, NULL, 'チェリーアイスサンドは北海道産のチェリーのアイスをサクサクのクッキーでサンドしたスイーツです。立方体なので大量に持ち運ぶときも便利です。\r\nいまだけ、頑丈な箱つきです。', NULL, NULL, '2018-09-28 10:14:52', '2022-07-29 09:50:53', 'product', NULL);
+INSERT INTO `dtb_product` (`id`, `creator_id`, `product_status_id`, `name`, `note`, `description_list`, `description_detail`, `search_word`, `free_area`, `create_date`, `update_date`, `discriminator_type`) VALUES
+(1, NULL, 1, '彩のジェラートCUBE', NULL, NULL, '冬でも食べたい立方体のジェラート。定番のチョコフレーバーは、チョコレート特有の甘い香りが特徴です。適度な甘みと日本人の口に合いやすいサイズ感で長く愛用いただけます。\n最高級バニラフレーバーは、贈り物としても人気です。', NULL, NULL, '2018-09-28 10:14:52', '2018-09-28 10:14:52', 'product'),
+(2, 1, 1, 'チェリーアイスサンド', NULL, NULL, 'チェリーアイスサンドは北海道産のチェリーのアイスをサクサクのクッキーでサンドしたスイーツです。立方体なので大量に持ち運ぶときも便利です。\r\nいまだけ、頑丈な箱つきです。', NULL, NULL, '2018-09-28 10:14:52', '2022-07-29 09:50:53', 'product');
 
 -- --------------------------------------------------------
 
@@ -2750,16 +2784,34 @@ CREATE TABLE `plg_securitychecker4_config` (
   `discriminator_type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `plg_site_kit_id_token`
+--
+
+CREATE TABLE `plg_site_kit_id_token` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `member_id` int(10) UNSIGNED DEFAULT NULL,
+  `id_token` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- ダンプしたテーブルのインデックス
 --
 
 --
--- テーブルのインデックス `c_mtb_shopstore_group`
+-- テーブルのインデックス `c_dtb_anything`
 --
-ALTER TABLE `c_mtb_shopstore_group`
+ALTER TABLE `c_dtb_anything`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- テーブルのインデックス `c_dtb_store_entry`
+--
+ALTER TABLE `c_dtb_store_entry`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_508A79EC4584665A` (`product_id`);
+  ADD KEY `IDX_887A9E5AE171EF5F` (`pref_id`);
 
 --
 -- テーブルのインデックス `doctrine_migration_versions`
@@ -3370,13 +3422,26 @@ ALTER TABLE `plg_securitychecker4_config`
   ADD PRIMARY KEY (`id`);
 
 --
+-- テーブルのインデックス `plg_site_kit_id_token`
+--
+ALTER TABLE `plg_site_kit_id_token`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UNIQ_5B28B5227597D3FE` (`member_id`);
+
+--
 -- ダンプしたテーブルの AUTO_INCREMENT
 --
 
 --
--- テーブルの AUTO_INCREMENT `c_mtb_shopstore_group`
+-- テーブルの AUTO_INCREMENT `c_dtb_anything`
 --
-ALTER TABLE `c_mtb_shopstore_group`
+ALTER TABLE `c_dtb_anything`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルの AUTO_INCREMENT `c_dtb_store_entry`
+--
+ALTER TABLE `c_dtb_store_entry`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -3401,13 +3466,13 @@ ALTER TABLE `dtb_block`
 -- テーブルの AUTO_INCREMENT `dtb_cart`
 --
 ALTER TABLE `dtb_cart`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- テーブルの AUTO_INCREMENT `dtb_cart_item`
 --
 ALTER TABLE `dtb_cart_item`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- テーブルの AUTO_INCREMENT `dtb_category`
@@ -3437,7 +3502,7 @@ ALTER TABLE `dtb_csv`
 -- テーブルの AUTO_INCREMENT `dtb_customer`
 --
 ALTER TABLE `dtb_customer`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- テーブルの AUTO_INCREMENT `dtb_customer_address`
@@ -3485,7 +3550,7 @@ ALTER TABLE `dtb_layout`
 -- テーブルの AUTO_INCREMENT `dtb_login_history`
 --
 ALTER TABLE `dtb_login_history`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- テーブルの AUTO_INCREMENT `dtb_mail_history`
@@ -3527,7 +3592,7 @@ ALTER TABLE `dtb_order_item`
 -- テーブルの AUTO_INCREMENT `dtb_page`
 --
 ALTER TABLE `dtb_page`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- テーブルの AUTO_INCREMENT `dtb_payment`
@@ -3656,14 +3721,20 @@ ALTER TABLE `plg_related_product`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- テーブルの AUTO_INCREMENT `plg_site_kit_id_token`
+--
+ALTER TABLE `plg_site_kit_id_token`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- ダンプしたテーブルの制約
 --
 
 --
--- テーブルの制約 `c_mtb_shopstore_group`
+-- テーブルの制約 `c_dtb_store_entry`
 --
-ALTER TABLE `c_mtb_shopstore_group`
-  ADD CONSTRAINT `FK_508A79EC4584665A` FOREIGN KEY (`product_id`) REFERENCES `dtb_product` (`id`);
+ALTER TABLE `c_dtb_store_entry`
+  ADD CONSTRAINT `FK_887A9E5AE171EF5F` FOREIGN KEY (`pref_id`) REFERENCES `mtb_pref` (`id`);
 
 --
 -- テーブルの制約 `dtb_authority_role`
@@ -4001,6 +4072,12 @@ ALTER TABLE `plg_recommend_product`
 ALTER TABLE `plg_related_product`
   ADD CONSTRAINT `FK_77B090F74584665A` FOREIGN KEY (`product_id`) REFERENCES `dtb_product` (`id`),
   ADD CONSTRAINT `FK_77B090F7A15B9831` FOREIGN KEY (`child_product_id`) REFERENCES `dtb_product` (`id`);
+
+--
+-- テーブルの制約 `plg_site_kit_id_token`
+--
+ALTER TABLE `plg_site_kit_id_token`
+  ADD CONSTRAINT `FK_5B28B5227597D3FE` FOREIGN KEY (`member_id`) REFERENCES `dtb_member` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
