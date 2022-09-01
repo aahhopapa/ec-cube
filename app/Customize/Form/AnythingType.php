@@ -36,9 +36,9 @@ class AnythingType extends AbstractType
             ])
             ->add('any_select', ChoiceType::class, [
                 'choices' => [
-                    'ca' => 'standard',
-                    'bb' => 'expedited',
-                    'ag' => 'priority',
+                    'standard' => 'standard',
+                    'expedited' => 'expedited',
+                    'priority' => 'priority',
                 ],
                 'required' => true,
                 'placeholder' => "Defualt",

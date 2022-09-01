@@ -38,8 +38,13 @@ file that was distributed with this source code.
                                 {{ form_label(form.any_select, 'selectラベル', { 'label_attr': { 'class': 'ec-label' }}) }}
                             </dt>
                             <dd>
+                                <div class="ec-select">
+                                    <select disabled>
+                                        <option selected>{{ form.any_select.vars.value }} </option>
+                                    </select>
+                                </div>
                                 <div class="ec-group{{ has_errors(form.any_select) ? ' error' }}">
-                                    {{ form_widget(form.any_select, { type : 'select', 'attr': {'disabled': true} }) }}
+                                    {{ form_widget(form.any_select, { type : 'select', 'attr': { hidden : true } }) }}
                                 </div>
                             </dd>
                         </dl>
