@@ -40,47 +40,27 @@ class AnythingController extends AbstractController
         $this->anythingRepository = $anythingRepository;
     }
 
+    // @Route("/anything", methods={"GET", "POST"})
     /**
      * 画面.
      * @Route("/anything", name="anything", methods={"GET", "POST"})
-     * @Route("/anything", methods={"GET", "POST"})
+     * 
      * @Template("Anything/index.twig")
      */
     public function testMethod(Request $request)
     {
 
-        /** @var $Customer \Eccube\Entity\Customer */
         $Anything = $this->anythingRepository->newAnything();
-        /* @var $builder \Symfony\Component\Form\FormBuilderInterface */
         $builder = $this->formFactory->createBuilder(AnythingType::class, $Anything);
-        dump($builder);
         
-        // $event = new EventArgs(
-        //     [
-        //         'builder' => $builder,
-        //         'Anything' => $Anything,
-        //     ],
-        //     $request
-        // );
-
-        // $this->eventDispatcher->dispatch(EccubeEvents::FRONT_ANYTHING_INDEX_INITIALIZE, $event);
-
-        /* @var $form \Symfony\Component\Form\FormInterface */
         $form = $builder->getForm();
 
         $form->handleRequest($request);
 
-        dump($form);
-
-
-
         $var1 = $form->isSubmitted();
-        dump($var1);
         if($var1) {
             $var2 = $form->isValid();
-            dump($var2);
         }
-        // $anyInput = $form->get('any_input');
         
         if ($var1 && $var2) {
             switch ($request->get('mode')) {
@@ -95,10 +75,10 @@ class AnythingController extends AbstractController
                 case 'complete':
                     dump('in complete');
 
-                    // $this->eventDispatcher->dispatch(EccubeEvents::FRONT_ENTRY_INDEX_COMPLETE, $event);
-                    return  [
-                        'form' => $form->createView(),
-                    ];
+                    $this->entityManager->persist($Anything);
+                    $this->entityManager->flush();
+
+                    return $this->redirectToRoute('any_complete');
             }
         } else {
             return  [
@@ -109,23 +89,11 @@ class AnythingController extends AbstractController
 
     /**
      * 画面.
-     * @Route("/anything", name="any_complete", methods={"GET", "POST"})
-     * @Template("Anything/index.twig")
+     * @Route("/anything/complete", name="any_complete", methods={"GET"})
+     * @Template("Anything/complete.twig")
      */
-    public function methodComplete(Request $request)
+    public function methodComplete()
     {
-
-        /** @var $Customer \Eccube\Entity\Customer */
-        $Anything = $this->anythingRepository->newAnything();
-        /* @var $builder \Symfony\Component\Form\FormBuilderInterface */
-        $builder = $this->formFactory->createBuilder(AnythingType::class, $Anything);
-        
-        /* @var $form \Symfony\Component\Form\FormInterface */
-        $form = $builder->getForm();
-        $form->handleRequest($request);
-
-        return  [
-            'form' => $form->createView(),
-        ];
+        return [];
     }
 }
