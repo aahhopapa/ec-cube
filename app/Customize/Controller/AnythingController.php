@@ -52,6 +52,15 @@ class AnythingController extends AbstractController
 
         $Anything = $this->anythingRepository->newAnything();
         $builder = $this->formFactory->createBuilder(AnythingType::class, $Anything);
+   
+        $event = new EventArgs(
+            [
+                'builder' => $builder,
+                'Anything' => $Anything,
+            ],
+            $request
+        );
+        $this->eventDispatcher->dispatch(EccubeEvents::FRONT_ANYTHING_INDEX_INITIALIZE, $event);
         
         $form = $builder->getForm();
 
