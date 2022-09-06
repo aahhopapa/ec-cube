@@ -1,0 +1,84 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'registration_page' %}
+
+{# {% form_theme form 'Form/form_div_layout.twig' %} #}
+
+{% block main %}
+    <div class="ec-registerRole">
+        <div class="ec-pageHeader">
+            <h1>{{ 'AnythingDeatail(確認)画面'|trans }}</h1>
+        </div>
+        <div class="ec-off1Grid">
+            <div class="ec-off1Grid__cell">
+                <form method="post" action="{{ url('anything_detail') }}">
+                    {{ form_widget(form._token) }}
+                    <div class="ec-borderedDefs">
+                        <dl>
+                            <dt>
+                                {{ form_label(form.any_detail_input, 'inputラベル', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                {{ form.any_detail_input.vars.value}} 
+                                {{ form_widget(form.any_detail_input, { type : 'hidden' }) }}
+                            </dd>
+                        </dl>
+                        {# <dl>
+                            <dt>
+                                {{ form_label(form.any_detail_select, 'selectラベル', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-select">
+                                    <select disabled>
+                                        <option selected>{{ form.any_detail_select.vars.value }} </option>
+                                    </select>
+                                </div>
+                                <div class="ec-group{{ has_errors(form.any_detail_select) ? ' error' }}">
+                                    {{ form_widget(form.any_detail_select, { type : 'select', 'attr': { hidden : true } }) }}
+                                </div>
+                            </dd>
+                        </dl> #}
+
+                        {# エンティティ拡張の自動出力 #}
+                        {# {% for f in form|filter(f => f.vars.eccube_form_options.auto_render) %}
+                            {% if f.vars.eccube_form_options.form_theme %}
+                                {% form_theme f f.vars.eccube_form_options.form_theme %}
+                                {{ form_row(f) }}
+                            {% else %}
+                                <dl>
+                                    <dt>
+                                        {{ form_label(f) }}
+                                    </dt>
+                                    <dd>
+                                        <div class="{{ f.vars.eccube_form_options.style_class }}{{ has_errors(f) ? ' error' }}">
+                                            {{ f.vars.data }}
+                                            {{ form_widget(f, { type: 'hidden'}) }}
+                                        </div>
+                                    </dd>
+                                </dl>
+                            {% endif %}
+                        {% endfor %} #}
+                    </div>
+                    <div class="ec-registerRole__actions">
+                        <div class="ec-off4Grid">
+                            <div class="ec-off4Grid__cell">
+                                <button class="ec-blockBtn--action" type="submit" name="mode" value="complete">{{ 'completeする'|trans }}</button>
+                                <button class="ec-blockBtn--cancel" type="submit" name="mode" value="back">{{ '戻る'|trans }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
