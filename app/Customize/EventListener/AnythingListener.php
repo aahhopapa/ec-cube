@@ -34,8 +34,8 @@ class AnythingListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            // EccubeEvents::FRONT_ANYTHING_INDEX_INITIALIZE => 'anythingEvent',
-            'front.anything.index.initialize' => 'anythingEvent'
+            EccubeEvents::FRONT_ANYTHING_INDEX_INITIALIZE => 'anythingEvent',
+            // 'front.anything.index.initialize' => 'anythingEvent'
         ];
         
     }

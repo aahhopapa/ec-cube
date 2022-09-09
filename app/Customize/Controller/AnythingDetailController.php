@@ -61,18 +61,41 @@ class AnythingDetailController extends AbstractController
     public function testMethod(Request $request)
     {
 
-        $AnythingDetail = $this->anything_detail_Repository->newAnythingDetail();
+        $Anythings = $this->anything_Repository->findAll();
+        $AnythingDetails = $this->anything_detail_Repository->findAll();
         
-        $builder = $this->formFactory->createBuilder(AnythingDetailType::class, $AnythingDetail);
-   
-        $event = new EventArgs(
+        foreach ($Anythings as $Anything) {
+            $anythingId = $Anything->getId();
+            $AnythingDetails = $this->anything_detail_Repository->findBy(['Anything' => $anythingId]);
+            foreach ($AnythingDetails as $AnythingDetail) {
+                $Anything->addAnythingDetail($AnythingDetail);
+            }
+            // dump($AnythingDetails);
+        }
+        dump($Anythings);
+        // $Anything = $this->anything_Repository->findAll();
+        // $AnythingDetail->setAnyDetailInput();
+        // $AnythingDetail->setAnyDetailSelect();
+        
+        $builder = $this->formFactory->createNamedBuilder(
+            '',
+            AnythingDetailType::class,
+            null,
             [
-                'builder' => $builder,
-                'AnythingDetail' => $AnythingDetail,
-            ],
-            $request
+                'anythings' => $Anythings,
+            ]
         );
-        $this->eventDispatcher->dispatch(EccubeEvents::FRONT_ANYTHING_INDEX_INITIALIZE, $event);
+
+        // $builder = $this->formFactory->createBuilder(AnythingDetailType::class, $AnythingDetail);
+   
+        // $event = new EventArgs(
+        //     [
+        //         'builder' => $builder,
+        //         'anythingDetail' => $AnythingDetail,
+        //     ],
+        //     $request
+        // );
+        // $this->eventDispatcher->dispatch(EccubeEvents::FRONT_ANYTHING_INDEX_INITIALIZE, $event);
         
         $form = $builder->getForm();
 
@@ -96,7 +119,6 @@ class AnythingDetailController extends AbstractController
                 case 'complete':
                     dump('in complete');
                     // $Anything = $this->anything_Repository->newAnything();
-                    $Anything = $this->anything_Repository->findBy(['id' => '1']);
 
                     dump($Anything);
                     $AnythingDetail->setAnything($Anything[0]);

@@ -4,17 +4,80 @@ namespace Customize\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-    /**
-     * Anything
-     *
-     * @ORM\Table(name="c_dtb_anything")
-     * @ORM\InheritanceType("SINGLE_TABLE")
-     * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)
-     * @ORM\HasLifecycleCallbacks()
-     * @ORM\Entity(repositoryClass="Customize\Repository\AnythingRepository")
-     */
-    class Anything extends \Eccube\Entity\AbstractEntity
-    {
+/**
+ * Anything
+ *
+ * @ORM\Table(name="c_dtb_anything")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="Customize\Repository\AnythingRepository")
+ */
+class Anything extends \Eccube\Entity\AbstractEntity
+{
+        /**
+         * Constructor
+         */
+        public function __construct()
+        {
+            $this->AnythingDetails = new \Doctrine\Common\Collections\ArrayCollection();
+        }
+
+        /**
+         * @var \Doctrine\Common\Collections\Collection
+         *
+         * @ORM\OneToMany(targetEntity="Customize\Entity\AnythingDetail", mappedBy="Anything", cascade={"remove"})
+         * @ORM\OrderBy({
+         *     "id"="ASC"
+         * })
+         */
+        private $AnythingDetails;
+
+
+
+        // private $anythingSelectArray = [];
+
+        // /**
+        //  * Get anythingSelectArray
+        //  *
+        //  * @return array
+        //  */
+        // public function getAnythingSelectArray()
+        // {
+        //     // $this->_calc();
+        //     foreach ($this->getAnythingDetails() as $AnythingDetail) {
+        //         $this->anythingSelectArray[$AnythingDetail->getId()] = $AnythingDetail->getAnyDetailSelect();
+
+        //     }
+
+        //     return $this->anythingSelectArray;
+        // }
+        
+        /**
+         * Get AnythingDetails.
+         *
+         * @return \Doctrine\Common\Collections\Collection
+         */
+        public function getAnythingDetails()
+        {
+            return $this->AnythingDetails;
+        }
+
+        /**
+         * Add productClass.
+         *
+         * @param \Eccube\Entity\AnythingDetail $anythingDetail
+         *
+         * @return AnythingDetail
+         */
+        public function addAnythingDetail(AnythingDetail $anythingDetail)
+        {
+            $this->AnythingDetails[] = $anythingDetail;
+
+            return $this;
+        }
+
+
         /**
          * @var int
          *

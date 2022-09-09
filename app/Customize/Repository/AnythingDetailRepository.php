@@ -3,7 +3,6 @@
 namespace Customize\Repository;
 
 use Customize\Entity\AnythingDetail;
-use Customize\Entity\Anything;
 use Eccube\Repository\AbstractRepository;
 use Eccube\Util\StringUtil;
 use Symfony\Bridge\Doctrine\RegistryInterface;

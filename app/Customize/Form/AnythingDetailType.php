@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Customize\Form\AnythingType;
 use Customize\Entity\Anything;
+use Customize\Entity\AnythingDetail;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,10 +33,37 @@ class AnythingDetailType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $Anythings = $options['anythings'];
+
+        $anythingSelectArray = [];
+        foreach ($Anythings as $Anything) {
+            array_push($anythingSelectArray, $Anything->getAnySelect());
+        }
+
         $builder
             ->add('any_detail_input', TextType::class, [
                 'required' => false,
-            ])
+            ]);
+        // if ($AnythingDetails && $AnythingDetails->getAnything()) {
+            // if (!is_null($AnythingDetails->getAnything())) {
+                
+                $builder->add('anything_select', ChoiceType::class, [
+                    'label' => 'AnySelectラベル',
+                    'choices' => ['common.select' => '__unselected'] + array_flip($anythingSelectArray),
+                    'mapped' => false,
+                ]);
+            // }
+        //     if (!is_null($Product->getClassName2())) {
+        //         dump('in build ClassName2');
+        //         $builder->add('classcategory_id2', ChoiceType::class, [
+        //             'label' => $Product->getClassName2(),
+        //             'choices' => ['common.select' => '__unselected'],
+        //             'mapped' => false,
+        //         ]);
+        //     }
+
+        // }
+
             // ->add('anything', AnythingType::class, [
             //     'required' => true,
             // ])
@@ -44,6 +72,9 @@ class AnythingDetailType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-
+        // $resolver->setRequired('anythingDetail');
+        $resolver->setDefaults([
+            'anythings' => Anything::class,
+        ]);
     }
 }

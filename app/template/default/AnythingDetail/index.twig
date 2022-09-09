@@ -8,7 +8,12 @@
 
 
 {% block javascript %}
-    <script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+    <script>
+        eccube.any_detail = {{ anything_as_json()|raw }};
+         console.log(eccube.any_detail);
+    
+    </script>
+    
 {% endblock javascript %} 
 
 {% block main %}
@@ -32,15 +37,15 @@
                         </dd>
                     </dl>
                     <dl>
-                       {#  <dt>
-                            {{ form_label(form.any_detail_select, 'selectラベル') }}
+                        <dt>
+                            {{ form_label(form.anything_select, 'selectラベル') }}
                         </dt>
                         <dd>
-                            <div class="ec-select{{ has_errors(form.any_detail_select) ? ' error' }}">
-                                {{ form_widget(form.any_detail_select) }}
-                                {{ form_errors(form.any_detail_select) }}
+                            <div class="ec-select{{ has_errors(form.anything_select) ? ' error' }}">
+                                {{ form_widget(form.anything_select) }}
+                                {{ form_errors(form.anything_select) }}
                             </div>
-                        </dd> #}
+                        </dd>
                     </dl>
                 <div class="ec-registerRole__actions">
                     <div class="ec-off4Grid">

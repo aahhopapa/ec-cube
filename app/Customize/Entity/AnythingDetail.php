@@ -32,9 +32,9 @@ use Doctrine\ORM\Mapping as ORM;
          *   @ORM\JoinColumn(name="anything_id", referencedColumnName="id")
          * })
          */
-        private $anything;
+        private $Anything;
 
-
+        
         /**
          * Get anything
          *
@@ -42,7 +42,7 @@ use Doctrine\ORM\Mapping as ORM;
          */
         public function getAnything()
         {
-            return $this->anything;
+            return $this->Anything;
         }
 
         /**
@@ -53,7 +53,7 @@ use Doctrine\ORM\Mapping as ORM;
          */
         public function setAnything(\Customize\Entity\Anything $anything = null)
         {
-            $this->anything = $anything;
+            $this->Anything = $anything;
             return $this;
         }
 
