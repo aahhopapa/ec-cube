@@ -73,27 +73,27 @@ class AddCartType extends AbstractType
         $this->Product = $Product;
         $ProductClasses = $Product->getProductClasses();
 
-        $builder
-            ->add('product_id', HiddenType::class, [
-                'data' => $Product->getId(),
-                'mapped' => false,
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Regex(['pattern' => '/^\d+$/']),
-                ], ])
-            ->add(
-                $builder
-                    ->create('ProductClass', HiddenType::class, [
-                        'data_class' => null,
-                        'data' => $Product->hasProductClass() ? null : $ProductClasses->first(),
-                        'constraints' => [
-                            new Assert\NotBlank(),
-                        ],
-                    ])
-                    ->addModelTransformer(new EntityToIdTransformer($this->doctrine->getManager(), ProductClass::class))
-            );
+        // $builder
+        //     ->add('product_id', HiddenType::class, [
+        //         'data' => $Product->getId(),
+        //         'mapped' => false,
+        //         'constraints' => [
+        //             new Assert\NotBlank(),
+        //             new Assert\Regex(['pattern' => '/^\d+$/']),
+        //         ], ])
+        //     ->add(
+        //         $builder
+        //             ->create('ProductClass', HiddenType::class, [
+        //                 'data_class' => null,
+        //                 'data' => $Product->hasProductClass() ? null : $ProductClasses->first(),
+        //                 'constraints' => [
+        //                     new Assert\NotBlank(),
+        //                 ],
+        //             ])
+        //             ->addModelTransformer(new EntityToIdTransformer($this->doctrine->getManager(), ProductClass::class))
+        //     );
 
-        if ($Product->getStockFind()) {
+        // if ($Product->getStockFind()) {
             $builder
                 ->add('quantity', IntegerType::class, [
                     'data' => 1,
@@ -126,32 +126,33 @@ class AddCartType extends AbstractType
                 }
             }
 
-            $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($Product) {
-                $data = $event->getData();
-                $form = $event->getForm();
-                if (isset($data['classcategory_id1']) && !is_null($Product->getClassName2())) {
-                    if ($data['classcategory_id1']) {
-                        $form->add('classcategory_id2', ChoiceType::class, [
-                            'label' => $Product->getClassName2(),
-                            'choices' => ['common.select' => '__unselected'] + $Product->getClassCategories2AsFlip($data['classcategory_id1']),
-                            'mapped' => false,
-                        ]);
-                    }
-                }
-            });
+            // $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($Product) {
+            //     log_info("--------------- in addEventListener -----------------");
+            //     $data = $event->getData();
+            //     $form = $event->getForm();
+            //     if (isset($data['classcategory_id1']) && !is_null($Product->getClassName2())) {
+            //         if ($data['classcategory_id1']) {
+            //             $form->add('classcategory_id2', ChoiceType::class, [
+            //                 'label' => $Product->getClassName2(),
+            //                 'choices' => ['common.select' => '__unselected'] + $Product->getClassCategories2AsFlip($data['classcategory_id1']),
+            //                 'mapped' => false,
+            //             ]);
+            //         }
+            //     }
+            // });
 
-            $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
-                /** @var CartItem $CartItem */
-                $CartItem = $event->getData();
-                $ProductClass = $CartItem->getProductClass();
-                // FIXME 価格の設定箇所、ここでいいのか
-                if ($ProductClass) {
-                    $CartItem
-                        ->setProductClass($ProductClass)
-                        ->setPrice($ProductClass->getPrice02IncTax());
-                }
-            });
-        }
+            // $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+            //     /** @var CartItem $CartItem */
+            //     $CartItem = $event->getData();
+            //     $ProductClass = $CartItem->getProductClass();
+            //     // FIXME 価格の設定箇所、ここでいいのか
+            //     if ($ProductClass) {
+            //         $CartItem
+            //             ->setProductClass($ProductClass)
+            //             ->setPrice($ProductClass->getPrice02IncTax());
+            //     }
+            // });
+        // }
     }
 
     /**

@@ -26,7 +26,7 @@ class Anything extends \Eccube\Entity\AbstractEntity
         /**
          * @var \Doctrine\Common\Collections\Collection
          *
-         * @ORM\OneToMany(targetEntity="Customize\Entity\AnythingDetail", mappedBy="Anything", cascade={"remove"})
+         * @ORM\OneToMany(targetEntity="Customize\Entity\AnythingDetail", mappedBy="Anything", cascade={"persist","remove"})
          * @ORM\OrderBy({
          *     "id"="ASC"
          * })

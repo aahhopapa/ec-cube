@@ -273,9 +273,9 @@ class ProductController extends AbstractController
      */
     public function detail(Request $request, Product $Product)
     {
-        if (!$this->checkVisibility($Product)) {
-            throw new NotFoundHttpException();
-        }
+        // if (!$this->checkVisibility($Product)) {
+        //     throw new NotFoundHttpException();
+        // }
 
         $builder = $this->formFactory->createNamedBuilder(
             '',
@@ -287,27 +287,27 @@ class ProductController extends AbstractController
             ]
         );
 
-        $event = new EventArgs(
-            [
-                'builder' => $builder,
-                'Product' => $Product,
-            ],
-            $request
-        );
-        $this->eventDispatcher->dispatch(EccubeEvents::FRONT_PRODUCT_DETAIL_INITIALIZE, $event);
+        // $event = new EventArgs(
+        //     [
+        //         'builder' => $builder,
+        //         'Product' => $Product,
+        //     ],
+        //     $request
+        // );
+        // $this->eventDispatcher->dispatch(EccubeEvents::FRONT_PRODUCT_DETAIL_INITIALIZE, $event);
 
-        $is_favorite = false;
-        if ($this->isGranted('ROLE_USER')) {
-            $Customer = $this->getUser();
-            $is_favorite = $this->customerFavoriteProductRepository->isFavorite($Customer, $Product);
-        }
+        // $is_favorite = false;
+        // if ($this->isGranted('ROLE_USER')) {
+        //     $Customer = $this->getUser();
+        //     $is_favorite = $this->customerFavoriteProductRepository->isFavorite($Customer, $Product);
+        // }
 
         return [
-            'title' => $this->title,
-            'subtitle' => $Product->getName(),
+            // 'title' => $this->title,
+            // 'subtitle' => $Product->getName(),
             'form' => $builder->getForm()->createView(),
             'Product' => $Product,
-            'is_favorite' => $is_favorite,
+            // 'is_favorite' => $is_favorite,
         ];
     }
 
@@ -383,6 +383,7 @@ class ProductController extends AbstractController
             ]
         );
 
+        log_info('999999999999999999999999999');
         $event = new EventArgs(
             [
                 'builder' => $builder,

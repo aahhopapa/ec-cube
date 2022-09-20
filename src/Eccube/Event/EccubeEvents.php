@@ -475,6 +475,10 @@ final class EccubeEvents
     const FRONT_ENTRY_INDEX_COMPLETE = 'front.entry.index.complete';
     // activate
     const FRONT_ENTRY_ACTIVATE_COMPLETE = 'front.entry.activate.complete';
+    
+
+    // const FRONT_ANYTHING_INDEX_INITIALIZE = 'front.anything.index.initialize';
+    const FRONT_ANYTHING_INDEX_INITIALIZE = 'anythingEvent';
 
     /**
      * ForgotController

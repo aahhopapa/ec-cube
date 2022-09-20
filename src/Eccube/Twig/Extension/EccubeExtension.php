@@ -59,6 +59,7 @@ class EccubeExtension extends AbstractExtension
         return [
             new TwigFunction('has_errors', [$this, 'hasErrors']),
             new TwigFunction('active_menus', [$this, 'getActiveMenus']),
+
             new TwigFunction('class_categories_as_json', [$this, 'getClassCategoriesAsJson']),
             new TwigFunction('product', [$this, 'getProduct']),
             new TwigFunction('php_*', [$this, 'getPhpFunctions'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
@@ -243,7 +244,10 @@ class EccubeExtension extends AbstractExtension
      */
     public function getClassCategoriesAsJson(Product $Product)
     {
-        $Product->_calc();
+        // $Product->_calc();
+        // dump('in extension');
+        // dump($Product->_calc());
+        
         $class_categories = [
             '__unselected' => [
                 '__unselected' => [
@@ -252,6 +256,8 @@ class EccubeExtension extends AbstractExtension
                 ],
             ],
         ];
+        // dump($class_categories);
+
         foreach ($Product->getProductClasses() as $ProductClass) {
             /** @var ProductClass $ProductClass */
             if (!$ProductClass->isVisible()) {
@@ -266,27 +272,32 @@ class EccubeExtension extends AbstractExtension
             $class_category_id1 = $ClassCategory1 ? (string) $ClassCategory1->getId() : '__unselected2';
             $class_category_id2 = $ClassCategory2 ? (string) $ClassCategory2->getId() : '';
             $class_category_name2 = $ClassCategory2 ? $ClassCategory2->getName().($ProductClass->getStockFind() ? '' : trans('front.product.out_of_stock_label')) : '';
+            // $class_category_name2 = $ClassCategory2 ? $ClassCategory2->getName(): '';
+            // $class_category_name2 = $ClassCategory2 ? trans('front.product.out_of_stock_label'): '';
+            
 
             $class_categories[$class_category_id1]['#'] = [
+            // $class_categories[$class_category_id1][''] = [
                 'classcategory_id2' => '',
                 'name' => trans('common.select'),
                 'product_class_id' => '',
             ];
-            $class_categories[$class_category_id1]['#'.$class_category_id2] = [
+            $class_categories[$class_category_id1]['###'.$class_category_id2] = [
+            // $class_categories[$class_category_id1][''.$class_category_id2] = [
                 'classcategory_id2' => $class_category_id2,
                 'name' => $class_category_name2,
-                'stock_find' => $ProductClass->getStockFind(),
-                'price01' => $ProductClass->getPrice01() === null ? '' : number_format($ProductClass->getPrice01()),
-                'price02' => number_format($ProductClass->getPrice02()),
-                'price01_inc_tax' => $ProductClass->getPrice01() === null ? '' : number_format($ProductClass->getPrice01IncTax()),
-                'price02_inc_tax' => number_format($ProductClass->getPrice02IncTax()),
-                'price01_with_currency' => $ProductClass->getPrice01() === null ? '' : $this->getPriceFilter($ProductClass->getPrice01()),
-                'price02_with_currency' => $this->getPriceFilter($ProductClass->getPrice02()),
-                'price01_inc_tax_with_currency' => $ProductClass->getPrice01() === null ? '' : $this->getPriceFilter($ProductClass->getPrice01IncTax()),
-                'price02_inc_tax_with_currency' => $this->getPriceFilter($ProductClass->getPrice02IncTax()),
-                'product_class_id' => (string) $ProductClass->getId(),
-                'product_code' => $ProductClass->getCode() === null ? '' : $ProductClass->getCode(),
-                'sale_type' => (string) $ProductClass->getSaleType()->getId(),
+                // 'stock_find' => $ProductClass->getStockFind(),
+                // 'price01' => $ProductClass->getPrice01() === null ? '' : number_format($ProductClass->getPrice01()),
+                // 'price02' => number_format($ProductClass->getPrice02()),
+                // 'price01_inc_tax' => $ProductClass->getPrice01() === null ? '' : number_format($ProductClass->getPrice01IncTax()),
+                // 'price02_inc_tax' => number_format($ProductClass->getPrice02IncTax()),
+                // 'price01_with_currency' => $ProductClass->getPrice01() === null ? '' : $this->getPriceFilter($ProductClass->getPrice01()),
+                // 'price02_with_currency' => $this->getPriceFilter($ProductClass->getPrice02()),
+                // 'price01_inc_tax_with_currency' => $ProductClass->getPrice01() === null ? '' : $this->getPriceFilter($ProductClass->getPrice01IncTax()),
+                // 'price02_inc_tax_with_currency' => $this->getPriceFilter($ProductClass->getPrice02IncTax()),
+                // 'product_class_id' => (string) $ProductClass->getId(),
+                // 'product_code' => $ProductClass->getCode() === null ? '' : $ProductClass->getCode(),
+                // 'sale_type' => (string) $ProductClass->getSaleType()->getId(),
             ];
         }
 

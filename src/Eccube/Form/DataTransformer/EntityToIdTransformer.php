@@ -19,6 +19,7 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class EntityToIdTransformer implements DataTransformerInterface
 {
+    
     /**
      * @var ObjectManager
      */

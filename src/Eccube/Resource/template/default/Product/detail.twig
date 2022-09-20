@@ -95,25 +95,26 @@ file that was distributed with this source code.
 {% block javascript %}
     <script>
         eccube.classCategories = {{ class_categories_as_json(Product)|raw }};
-
+        //console.log(eccube.classCategories);
         // 規格2に選択肢を割り当てる。
-        function fnSetClassCategories(form, classcat_id2_selected) {
+        {# function fnSetClassCategories(form, classcat_id2_selected) {
+            alert('d');
             var $form = $(form);
             var product_id = $form.find('input[name=product_id]').val();
             var $sele1 = $form.find('select[name=classcategory_id1]');
             var $sele2 = $form.find('select[name=classcategory_id2]');
             eccube.setClassCategories($form, product_id, $sele1, $sele2, classcat_id2_selected);
-        }
+        } #}
 
-        {% if form.classcategory_id2 is defined %}
+        {# {% if form.classcategory_id2 is defined %}
         fnSetClassCategories(
             $('#form1'), {{ form.classcategory_id2.vars.value|json_encode|raw }}
         );
         {% elseif form.classcategory_id1 is defined %}
         eccube.checkStock($('#form1'), {{ Product.id }}, {{ form.classcategory_id1.vars.value|json_encode|raw }}, null);
-        {% endif %}
+        {% endif %} #}
     </script>
-    <script>
+    {# <script>
         $(function() {
             // bfcache無効化
             $(window).bind('pageshow', function(event) {
@@ -138,40 +139,43 @@ file that was distributed with this source code.
                 $('.item_visual').slick('slickGoTo', index, false);
             })
         });
-    </script>
+    </script> #}
     <script>
         $(function() {
             $('.add-cart').on('click', function(event) {
-                {% if form.classcategory_id1 is defined %}
+                //{% if form.classcategory_id1 is defined %}
                 // 規格1フォームの必須チェック
-                if ($('#classcategory_id1').val() == '__unselected' || $('#classcategory_id1').val() == '') {
-                    $('#classcategory_id1')[0].setCustomValidity('{{ '項目が選択されていません'|trans }}');
-                    return true;
-                } else {
-                    $('#classcategory_id1')[0].setCustomValidity('');
-                }
-                {% endif %}
+                // if ($('#classcategory_id1').val() == '__unselected' || $('#classcategory_id1').val() == '') {
+                //     $('#classcategory_id1')[0].setCustomValidity('{{ '項目が選択されていません'|trans }}');
+                //     return true;
+                // } else {
+                //     $('#classcategory_id1')[0].setCustomValidity('');
+                // }
+                // {% endif %}
 
-                {% if form.classcategory_id2 is defined %}
+                // {% if form.classcategory_id2 is defined %}
                 // 規格2フォームの必須チェック
-                if ($('#classcategory_id2').val() == '__unselected' || $('#classcategory_id2').val() == '') {
-                    $('#classcategory_id2')[0].setCustomValidity('{{ '項目が選択されていません'|trans }}');
-                    return true;
-                } else {
-                    $('#classcategory_id2')[0].setCustomValidity('');
-                }
-                {% endif %}
+                // if ($('#classcategory_id2').val() == '__unselected' || $('#classcategory_id2').val() == '') {
+                //     $('#classcategory_id2')[0].setCustomValidity('{{ '項目が選択されていません'|trans }}');
+                //     return true;
+                // } else {
+                //     $('#classcategory_id2')[0].setCustomValidity('');
+                // }
+                // {% endif %}
 
                 // 個数フォームのチェック
-                if ($('#quantity').val() < 1) {
-                    $('#quantity')[0].setCustomValidity('{{ '1以上で入力してください。'|trans }}');
-                    return true;
-                } else {
-                    $('#quantity')[0].setCustomValidity('');
-                }
+                // if ($('#quantity').val() < 1) {
+                //     $('#quantity')[0].setCustomValidity('{{ '1以上で入力してください。'|trans }}');
+                //     return true;
+                // } else {
+                //     $('#quantity')[0].setCustomValidity('');
+                // }
 
                 event.preventDefault();
                 $form = $('#form1');
+
+                console.log($form);
+                alert();
                 $.ajax({
                     url: $form.attr('action'),
                     type: $form.attr('method'),
@@ -214,7 +218,7 @@ file that was distributed with this source code.
             $('.ec-modal').hide()
         });
     </script>
-    <script type="application/ld+json">
+    {# <script type="application/ld+json">
     {
         "@context": "https://schema.org/",
         "@type": "Product",
@@ -239,7 +243,7 @@ file that was distributed with this source code.
             "availability": "{{ Product.stock_find ? "InStock" : "OutOfStock" }}"
         }
     }
-    </script>
+    </script> #}
 {% endblock %}
 
 {% block main %}
@@ -249,7 +253,7 @@ file that was distributed with this source code.
                 <div class="ec-sliderItemRole">
 
                     <div class="item_visual">
-                        {% for ProductImage in Product.ProductImage %}
+                        {# {% for ProductImage in Product.ProductImage %}
                             <div class="slide-item"><img src="{{ asset(ProductImage, 'save_image') }}" alt="{{ loop.first ? Product.name : '' }}"></div>
                         {% else %}
                             <div class="slide-item"><img src="{{ asset(''|no_image_product, 'save_image') }}" alt="{{ loop.first ? Product.name : '' }}" /></div>
@@ -258,7 +262,7 @@ file that was distributed with this source code.
                     <div class="item_nav">
                         {% for ProductImage in Product.ProductImage %}
                             <div class="slideThumb" data-index="{{ loop.index0 }}"><img src="{{ asset(ProductImage, 'save_image') }}" alt=""></div>
-                        {% endfor %}
+                        {% endfor %} #}
                     </div>
                 </div>
             </div>
@@ -266,16 +270,16 @@ file that was distributed with this source code.
                 <div class="ec-productRole__profile">
                     {# 商品名 #}
                     <div class="ec-productRole__title">
-                        <h2 class="ec-headingTitle">{{ Product.name }}</h2>
+                        {# <h2 class="ec-headingTitle">{{ Product.name }}</h2> #}
                     </div>
                     {# タグ #}
                     <ul class="ec-productRole__tags">
-                        {% for Tag in Product.Tags %}
+                        {# {% for Tag in Product.Tags %}
                             <li class="ec-productRole__tag tag_{{ Tag.id }}">{{ Tag }}</li>
-                        {% endfor %}
+                        {% endfor %} #}
                     </ul>
                     {# 通常価格 #}
-                    {% if Product.hasProductClass -%}
+                    {# {% if Product.hasProductClass -%}
                         <div class="ec-productRole__priceRegular">
                             {% if Product.getPrice01Min is not null and Product.getPrice01IncTaxMin == Product.getPrice01IncTaxMax %}
                                 <span class="ec-productRole__priceRegularPrice">{{ '通常価格'|trans }}：<span class="price01-default">{{ Product.getPrice01IncTaxMin|price }}</span></span>
@@ -290,10 +294,10 @@ file that was distributed with this source code.
                             <span class="ec-productRole__priceRegularPrice">{{ '通常価格'|trans }}：{{ Product.getPrice01IncTaxMin|price }}</span>
                             <span class="ec-productRole__priceRegularTax">{{ '税込'|trans }}</span>
                         {% endif %}
-                    {% endif %}
+                    {% endif %} #}
                     {# 販売価格 #}
                     <div class="ec-productRole__price">
-                        {% if Product.hasProductClass -%}
+                        {# {% if Product.hasProductClass -%}
                             {% if Product.getPrice02IncTaxMin == Product.getPrice02IncTaxMax %}
                                 <div class="ec-price">
                                     <span class="ec-price__price price02-default">{{ Product.getPrice02IncTaxMin|price }}</span>
@@ -310,16 +314,16 @@ file that was distributed with this source code.
                                 <span class="ec-price__price">{{ Product.getPrice02IncTaxMin|price }}</span>
                                 <span class="ec-price__tax">{{ '税込'|trans }}</span>
                             </div>
-                        {% endif %}
+                        {% endif %} #}
                     </div>
                     {# 商品コード #}
-                    {% if Product.code_min is not empty %}
+                    {# {% if Product.code_min is not empty %}
                         <div class="ec-productRole__code">
                             {{ '商品コード'|trans }}： <span class="product-code-default">{{ Product.code_min }}{% if Product.code_min != Product.code_max %} ～ {{ Product.code_max }}{% endif %}</span>
                         </div>
-                    {% endif %}
+                    {% endif %} #}
                     {# 関連カテゴリ #}
-                    {% if Product.ProductCategories is not empty %}
+                    {# {% if Product.ProductCategories is not empty %}
                         <div class="ec-productRole__category">
                             <div>{{ '関連カテゴリ'|trans }}</div>
                             {% for ProductCategory in Product.ProductCategories %}
@@ -333,9 +337,10 @@ file that was distributed with this source code.
                                 </ul>
                             {% endfor %}
                         </div>
-                    {% endif %}
+                    {% endif %} #}
                     <form action="{{ url('product_add_cart', {id:Product.id}) }}" method="post" id="form1" name="form1">
-                        {% if Product.stock_find %}
+                    {# <form id="form1" name="form1"> #}
+                        {# {% if Product.stock_find %} #}
                             <div class="ec-productRole__actions">
                                 {% if form.classcategory_id1 is defined %}
                                     <div class="ec-select">
@@ -349,25 +354,27 @@ file that was distributed with this source code.
                                         </div>
                                     {% endif %}
                                 {% endif %}
-                                <div class="ec-numberInput"><span>{{ '数量'|trans }}</span>
+                                {# <div class="ec-numberInput"><span>{{ '数量'|trans }}</span>
                                     {{ form_widget(form.quantity) }}
                                     {{ form_errors(form.quantity) }}
-                                </div>
+                                </div> #}
                             </div>
                             <div class="ec-productRole__btn">
                                 <button type="submit" class="ec-blockBtn--action add-cart">
                                     {{ 'カートに入れる'|trans }}
                                 </button>
                             </div>
-                        {% else %}
+                        {# {% else %}
                             <div class="ec-productRole__btn">
                                 <button type="button" class="ec-blockBtn--action" disabled="disabled">
                                     {{ 'ただいま品切れ中です。'|trans }}
                                 </button>
                             </div>
-                        {% endif %}
+                        {% endif %} #}
 
-                        {{ form_rest(form) }}
+                        {# {{ form_rest(form) }}
+                        {{ dump(form) }} #}
+
                     </form>
                     <div class="ec-modal">
                         <div class="ec-modal-overlay">
@@ -383,7 +390,7 @@ file that was distributed with this source code.
                             </div>
                         </div>
                     </div>
-                    {% if BaseInfo.option_favorite_product %}
+                    {# {% if BaseInfo.option_favorite_product %}
                         <form action="{{ url('product_add_favorite', {id:Product.id}) }}" method="post">
                             <div class="ec-productRole__btn">
                                 {% if is_favorite == false %}
@@ -397,16 +404,16 @@ file that was distributed with this source code.
                                 {% endif %}
                             </div>
                         </form>
-                    {% endif %}
-                    <div class="ec-productRole__description">{{ Product.description_detail|raw|nl2br }}
+                    {% endif %} #}
+                    {# <div class="ec-productRole__description">{{ Product.description_detail|raw|nl2br }} #}
                     </div>
                 </div>
             </div>
         </div>
-        {% if Product.freearea %}
+        {# {% if Product.freearea %}
              <div class="ec-productRole__description">
                  {{ include(template_from_string(Product.freearea)) }}
             </div>
-        {% endif %}
+        {% endif %} #}
     </div>
 {% endblock %}

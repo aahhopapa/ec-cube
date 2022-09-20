@@ -103,7 +103,11 @@ class EntryType extends AbstractType
             if ($Customer instanceof Customer && !$Customer->getId()) {
                 $form = $event->getForm();
 
-                $form->add('user_policy_check', CheckboxType::class, [
+                $form->add('user_policy_check', CheckboxType::class, 
+                    // array('attr' => array('checked'   => 'checked')),
+                    
+                    [
+                        'attr' => array('checked'   => 'checked'),
                         'required' => true,
                         'label' => null,
                         'mapped' => false,
