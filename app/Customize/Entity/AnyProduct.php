@@ -48,7 +48,7 @@ class AnyProduct extends \Eccube\Entity\AbstractEntity
      *   @ORM\JoinColumn(name="any_product_status_id", referencedColumnName="id")
      * })
      */
-    private $AnyStatus;
+    private $AnyProductStatus;
 
 
     /**
@@ -200,4 +200,27 @@ class AnyProduct extends \Eccube\Entity\AbstractEntity
         return $this->AnyProductClasses;
     }
 
+    /**
+     * Set status.
+     *
+     * @param \Customize\Entity\ProductStatus|null $status
+     *
+     * @return Product
+     */
+    public function setAnyProductStatus(AnyProductStatus $anyProductStatus = null)
+    {
+        $this->AnyProductStatus = $anyProductStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get status.
+     *
+     * @return \Customize\Entity\AnyProductStatus|null
+     */
+    public function getAnyProductStatus()
+    {
+        return $this->AnyProductStatus;
+    }
 }

@@ -18,7 +18,13 @@ class AnySaleType extends \Eccube\Entity\Master\AbstractMasterEntity
 {
     /**
      * @var integer
+     * 販売種別A
      */
     const SALE_TYPE_NORMAL = 1;
+    /**
+     * @var integer
+     * 販売種別B
+     */
+    const SALE_TYPE_HARD = 2;
 
 }

@@ -10,7 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Customize\Repository\AnythingRepository;
 use Customize\Repository\AnythingDetailRepository;
 
-use Customize\Entity\ProductStatus;
+use Customize\Entity\AnyProductStatus;
+use Customize\Entity\AnyProductStock;
+use Customize\Entity\AnySaleType;
 use Customize\Repository\AnyCategoryRepository;
 use Customize\Repository\AnyProductCategoryRepository;
 use Customize\Repository\AnyProductClassRepository;
@@ -148,37 +150,55 @@ class DoctrineController extends AbstractController
      */
     public function doctrineTest2()
     {
-
         $AnyProduct = new \Customize\Entity\AnyProduct();
         $AnyProduct->setAnyInput('ai'.$this->current);
         $AnyProduct->setAnySelect('as'.$this->current);
         
-        $AnyProductClass = new \Customize\Entity\AnyProductClass();
         $AnyProductStatus = $this->anyProductStatusRepository->find(AnyProductStatus::DISPLAY_HIDE);
-        $AnyProduct
-            ->addProductClass($ProductClass)
-            ->setStatus($ProductStatus);
-        $AnyProductClass->setAnyProduct($AnyProduct);
+        $AnyProduct->setAnyProductStatus($AnyProductStatus);
         
-
-
-
-
-
-        $AnyCategory = new \Customize\Entity\AnyCategory();
-        $AnyProductCategory_1 = new \Customize\Entity\AnyProductCategory();
-        $AnyProductCategory_1->setAnyProductId($AnyProduct->getId());
-        $AnyProductCategory_1->setAnyCategory($AnyCategory->getId());
+        $AnyProductClass = new \Customize\Entity\AnyProductClass();
+        
+        $AnySaleType = $this->anySaleTypeRepository->find(AnySaleType::SALE_TYPE_HARD);
+        $AnyProductClass->setAnySaleType($AnySaleType);
+        
+        $AnyProductStock = new AnyProductStock();
+        $AnyProductClass->setAnyProductStock($AnyProductStock);
+        
+        $AnyProductClass->setAnyProduct($AnyProduct);
 
         $AnyProduct->addAnyProductClass($AnyProductClass);
-        $AnyProduct->addAnyProductCategory($AnyProductCategory_1);
         
-
         $this->entityManager->persist($AnyProduct);
         $this->entityManager->flush();
+        
+        
+        $AnyCategory = new \Customize\Entity\AnyCategory();
+        $AnyCategory = $this->anyCategoryRepository->findOneBy(['id' => '13']);
+        
+        $AnyProductCategory = new \Customize\Entity\AnyProductCategory();
+        $AnyProductCategory->setAnyCategory($AnyCategory);
+        $AnyProductCategory->setAnyCategoryId($AnyCategory->getId());
+        $AnyProductCategory->setAnyProduct($AnyProduct);
+        $AnyProductCategory->setAnyProductId($AnyProduct->getId());
+        
+        $AnyProduct->addAnyProductCategory($AnyProductCategory);
 
+        $this->entityManager->persist($AnyProductCategory);
+        $this->entityManager->flush();
+        
         return new Response(
             '<html><body>doctrine test 2</body></html>'
+        );
+    }
+    
+    /**
+     * @Route("/doctrine/3", methods={"GET"})
+     */
+    public function doctrineTest3()
+    {
+        return new Response(
+            '<html><body>doctrine test 3</body></html>'
         );
     }
 

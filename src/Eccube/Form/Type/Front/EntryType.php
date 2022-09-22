@@ -104,8 +104,6 @@ class EntryType extends AbstractType
                 $form = $event->getForm();
 
                 $form->add('user_policy_check', CheckboxType::class, 
-                    // array('attr' => array('checked'   => 'checked')),
-                    
                     [
                         'attr' => array('checked'   => 'checked'),
                         'required' => true,
